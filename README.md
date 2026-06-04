@@ -29,3 +29,75 @@ Captura que demuestra el funcionamiento de las restricciones de **Pydantic v2**:
 * Validación del campo `role` con valores no permitidos o nombres de longitud menor a 3 caracteres (Retorna error `422 Unprocessable Entity`).
 
 ![Pruebas de Validación de Errores](imagenes/validacion_error.png)
+
+## Codigo 200 ![alt text](image.png)
+## Codigo 201 ![alt text](image-1.png)
+## Codigo 404 ![alt text](image-2.png)
+## Codigo 400 ![alt text](image-3.png)
+## Codiogo 422 ![alt text](image-4.png)
+
+---
+
+## Instalación
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Ejecución
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Accede a la documentación en:
+- Swagger UI: http://127.0.0.1:8000/docs
+- ReDoc: http://127.0.0.1:8000/redoc
+
+---
+
+## Endpoints
+
+| Operación           | Método | Ruta             | Código esperado |
+|---------------------|--------|------------------|-----------------|
+| Listar usuarios     | GET    | /users           | 200 OK          |
+| Consultar usuario   | GET    | /users/{user_id} | 200 OK          |
+| Crear usuario       | POST   | /users           | 201 Created     |
+| Actualizar completo | PUT    | /users/{user_id} | 200 OK          |
+| Actualizar parcial  | PATCH  | /users/{user_id} | 200 OK          |
+| Eliminar usuario    | DELETE | /users/{user_id} | 204 No Content  |
+
+---
+
+## Códigos de error
+
+| Situación                     | Código |
+|-------------------------------|--------|
+| Usuario no encontrado         | 404    |
+| Correo duplicado              | 400    |
+| Rol no permitido              | 400    |
+| PATCH sin datos               | 400    |
+| Datos inválidos (Pydantic)    | 422    |
+| Sin autenticación (X-API-Key) | 401    |
+
+---
+
+## Dependency Injection (`Depends`)
+
+El proyecto usa `Depends()` para reutilizar lógica en múltiples endpoints:
+
+- `get_user_or_404` → busca usuario por ID o lanza 404
+- `validar_correo_unico` → verifica que el correo no esté en uso
+- `validar_rol_permitido` → verifica que el rol sea válido
+- `get_api_config` → retorna configuración general de la API
+- `simular_autenticacion` → valida cabecera `X-API-Key`
+
+---
+
+## Roles permitidos
+
+- `admin`
+- `support`
+- `user`

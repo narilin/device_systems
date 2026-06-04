@@ -1,15 +1,32 @@
 from fastapi import FastAPI
 from app.routes.user_routes import router as user_router
 
+
 app = FastAPI(
-    title="Device Systems API",
-    description="API REST para la gestión de usuarios del sistema de equipos",
-    version="1.0"
+    title="device_systems API",
+    description=(
+        "API REST para la gestión de usuarios del sistema **device_systems**.\n\n"
+        "Permite crear, consultar, actualizar y eliminar usuarios con validaciones "
+        "de roles, correos únicos y manejo de errores HTTP.\n\n"
+      
+    ),
+    version="2.0.0",
+    contact={
+        "name": "Soporte device_systems"
+    },
+    license_info={
+        "name": "MIT"
+    }
 )
 
-# Incluir las rutas modulares de usuarios
 app.include_router(user_router)
 
-@app.get("/")
+
+
+@app.get("/", tags=["Root"], summary="Bienvenida")
 def inicio():
-    return {"mensaje": "Bienvenido a la API de device_systems. Ve a /docs para ver la documentación"}
+    return {
+        "mensaje": "Bienvenido a la API device_systems v2.0.0",
+        "docs": "/docs",
+        "redoc": "/redoc"
+    }
