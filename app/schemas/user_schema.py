@@ -1,9 +1,10 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Literal, Optional
+from datetime import datetime
 
 
+# Modelo para crear usuario (POST)
 class UserCreate(BaseModel):
-    id: int = Field(..., description="ID único del usuario")
     name: str = Field(..., min_length=3, description="El nombre debe tener mínimo 3 caracteres")
     email: EmailStr = Field(..., description="Debe ser un correo con formato válido")
     role: Literal["admin", "support", "user"] = Field(..., description="Roles permitidos: admin, support, user")
@@ -12,7 +13,6 @@ class UserCreate(BaseModel):
     model_config = {
         "json_schema_extra": {
             "example": {
-                "id": 3,
                 "name": "Laura Gómez",
                 "email": "laura@sena.edu.co",
                 "role": "user",
@@ -22,6 +22,7 @@ class UserCreate(BaseModel):
     }
 
 
+# Modelo para actualización completa (PUT)
 class UserUpdate(BaseModel):
     name: str = Field(..., min_length=3, description="El nombre debe tener mínimo 3 caracteres")
     email: EmailStr = Field(..., description="Debe ser un correo con formato válido")
@@ -31,7 +32,7 @@ class UserUpdate(BaseModel):
     model_config = {
         "json_schema_extra": {
             "example": {
-                "name": "Laura Gómez Actualizada",
+                "name": "Laura Actualizada",
                 "email": "laura.nueva@sena.edu.co",
                 "role": "support",
                 "is_active": False
@@ -40,7 +41,8 @@ class UserUpdate(BaseModel):
     }
 
 
-class UserPartialUpdate(BaseModel):
+# Modelo para actualización parcial (PATCH)
+class UserPatch(BaseModel):
     name: Optional[str] = Field(default=None, min_length=3, description="Nombre del usuario")
     email: Optional[EmailStr] = Field(default=None, description="Correo electrónico")
     role: Optional[Literal["admin", "support", "user"]] = Field(default=None, description="Rol del usuario")
@@ -55,11 +57,13 @@ class UserPartialUpdate(BaseModel):
     }
 
 
+# Modelo de respuesta
 class UserResponse(BaseModel):
     id: int
     name: str
     email: EmailStr
     role: str
     is_active: bool
+    created_at: datetime
 
     model_config = {"from_attributes": True}

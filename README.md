@@ -30,11 +30,11 @@ Captura que demuestra el funcionamiento de las restricciones de **Pydantic v2**:
 
 ![Pruebas de Validación de Errores](imagenes/validacion_error.png)
 
-## Codigo 200 ![alt text](image.png)
-## Codigo 201 ![alt text](image-1.png)
-## Codigo 404 ![alt text](image-2.png)
-## Codigo 400 ![alt text](image-3.png)
-## Codiogo 422 ![alt text](image-4.png)
+## Codigo 200 ![alt text](imagenes/image.png)
+## Codigo 201 ![alt text](imagenes/image-1.png)
+## Codigo 404 ![alt text](imagenes/image-2.png)
+## Codigo 400 ![alt text](imagenes/image-3.png)
+## Codiogo 422 ![alt text](imagenes/image-4.png)
 
 ---
 
@@ -101,3 +101,19 @@ El proyecto usa `Depends()` para reutilizar lógica en múltiples endpoints:
 - `admin`
 - `support`
 - `user`
+
+![Base de datos](imagenes/basededatos.png)
+
+## Diferencia entre modelo SQLAlchemy y schema Pydantic
+
+El **modelo SQLAlchemy** define cómo se guarda la información en la base de datos,
+mientras que el **schema Pydantic** define qué datos recibe y devuelve la API,
+validando que sean correctos antes de procesarlos.
+
+---
+
+## ¿Por qué usar base de datos en lugar de listas?
+
+Con listas, los datos se pierden al reiniciar el servidor.
+Con SQLite los datos se guardan en el archivo `device_systems.db`
+y persisten aunque el servidor se apague.
