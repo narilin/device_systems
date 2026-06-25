@@ -4,6 +4,9 @@ from sqlalchemy.orm import Session
 from app.schemas.user_schema import UserCreate, UserUpdate, UserPatch, UserResponse
 from app.dependencies.database_dependency import get_db
 from app.services import user_service
+from app.services import loan_service
+from app.schemas.loan_schema import LoanResponse
+from typing import List
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -118,3 +121,13 @@ def delete_user(
 ):
     user_service.eliminar_usuario(db, user_id)
     return Response(status_code=204)
+
+@router.get(
+    "/{user_id}/loans",
+    response_model=List[LoanResponse],
+    summary="Préstamos de un usuario",
+    description="Retorna todos los préstamos asociados a un usuario específico.",
+    response_description="Lista de préstamos del usuario"
+)
+def get_user_loans(user_id: int, db: Session = Depends(get_db)):
+    return loan_service.listar_prestamos_de_usuario(db, user_id)

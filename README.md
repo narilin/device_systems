@@ -117,3 +117,43 @@ validando que sean correctos antes de procesarlos.
 Con listas, los datos se pierden al reiniciar el servidor.
 Con SQLite los datos se guardan en el archivo `device_systems.db`
 y persisten aunque el servidor se apague.
+
+
+## Imagenes [Proyecto-Final-v1] GA1-220501096-01-AA1-EV10
+
+Prueba 1: Ejecutar migraciones con Alembic
+![alt text](/imagenes/imagen1.png)
+![alt text](/imagenes/imagen2.png)
+
+Prueba 2: Crear usuario
+![alt text](/imagenes/imagen3.png)
+
+Prueba 3: Crear dispositivo
+![alt text](/imagenes/imagen4.png)
+
+Prueba 4: Crear préstamo
+![alt text](/imagenes/imagen5.png)
+
+Prueba 5: Intentar prestar un dispositivo no disponible
+![alt text](/imagenes/imagen6.png)
+
+Prueba 6: Listar préstamos con información de usuario y dispositivo
+![alt text](/imagenes/imagen7.png)
+
+Prueba 7: Filtrar préstamos por estado
+![alt text](/imagenes/imagen8.png)
+
+Prueba 8: Filtrar préstamos por tipo de dispositivo
+![alt text](/imagenes/imagen9.png)
+
+Prueba 9: Consultar préstamos de un usuario
+![alt text](/imagenes/imagen10.png)
+
+Prueba 10: Devolver un dispositivo
+![alt text](/imagenes/imagen11.png)
+
+Prueba 11: Validar que el dispositivo vuelva a estar disponible
+![alt text](/imagenes/imagen12.png)
+
+Prueba 12: Consultar historial de préstamos del dispositivo
+![alt text](/imagenes/imagen13.png)
