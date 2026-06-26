@@ -7,6 +7,7 @@ from app.dependencies.auth_dependency import get_current_user
 from app.models.user_model import User
 from fastapi import APIRouter, Depends, Request
 from app.middlewares.rate_limit import limiter
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -37,12 +38,16 @@ def register(
 @limiter.limit("5/minute")
 def login(
     request: Request,
-    datos: UserLogin,
+    form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
+    datos = UserLogin(
+        email=form_data.username,
+        password=form_data.password
+    )
+
     token = auth_service.autenticar_usuario(db, datos)
     return Token(access_token=token, token_type="bearer")
-
 @router.get(
     "/me",
     response_model=UserResponse,

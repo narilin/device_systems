@@ -160,3 +160,27 @@ Prueba 12: Consultar historial de préstamos del dispositivo
 
 
 ## [Proyecto-Final-v2] GA1-220501096-01-AA1-EV11
+
+Registro de usuario.
+![alt text](/imagenes/imagen14.png)
+Registro con contraseña débil.
+![alt text](/imagenes/imagen15.png)
+Registro con email duplicado.
+![alt text](/imagen/imagen16.png)
+Login correcto.
+![alt text](/imagen/imagen17.png)
+Login con contraseña incorrecta.
+![alt text](/imagen/imagen18.png)
+Consulta de /auth/me.
+![alt text](/imagen/imagen20.png)
+Acceso a ruta protegida sin token.
+![alt text](/imagen/imagen21.png)
+Acceso con token inválido.
+Acceso con usuario sin permisos.
+Creación de dispositivo con rol permitido.
+Eliminación de dispositivo con rol no permitido.
+Configuración CORS.
+Cabeceras generadas por middleware.
+Activación de rate limiting.
+Verificación de Swagger/OpenAPI.
+![alt text](/imagen/imagen19.png)
