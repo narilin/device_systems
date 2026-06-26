@@ -6,6 +6,10 @@ from app.dependencies.database_dependency import get_db
 from app.services import device_service
 from app.services import loan_service
 from app.schemas.loan_schema import LoanResponse
+from app.dependencies.auth_dependency import (
+    require_admin,
+    require_admin_or_support
+)
 
 router = APIRouter(prefix="/devices", tags=["Devices"])
 
@@ -52,7 +56,11 @@ def get_device_by_id(device_id: int, db: Session = Depends(get_db)):
     description="Registra un nuevo dispositivo. Valida número de serie duplicado.",
     response_description="Dispositivo creado exitosamente"
 )
-def create_device(device: DeviceCreate, db: Session = Depends(get_db)):
+def create_device(
+    device: DeviceCreate,
+    db: Session = Depends(get_db),
+    current_user = Depends(require_admin_or_support)
+):
     return device_service.crear_dispositivo(db, device)
 
 
@@ -63,9 +71,13 @@ def create_device(device: DeviceCreate, db: Session = Depends(get_db)):
     description="Actualiza los campos enviados de un dispositivo existente.",
     response_description="Dispositivo actualizado"
 )
-def update_device(device_id: int, device: DeviceUpdate, db: Session = Depends(get_db)):
+def update_device(
+    device_id: int,
+    device: DeviceUpdate,
+    db: Session = Depends(get_db),
+    current_user = Depends(require_admin_or_support)
+):
     return device_service.actualizar_dispositivo(db, device_id, device)
-
 
 @router.patch(
     "/{device_id}",
@@ -85,9 +97,16 @@ def partial_update_device(device_id: int, device: DeviceUpdate, db: Session = De
     description="Elimina un dispositivo existente por su ID.",
     response_description="Dispositivo eliminado (sin contenido)"
 )
-def delete_device(device_id: int, db: Session = Depends(get_db)):
+def delete_device(
+    device_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(require_admin)
+):
     device_service.eliminar_dispositivo(db, device_id)
     return Response(status_code=204)
+    device_service.eliminar_dispositivo(db, device_id)
+    return Response(status_code=204)
+
 
 @router.get(
     "/{device_id}/loans",

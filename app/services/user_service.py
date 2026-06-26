@@ -4,6 +4,8 @@ from fastapi import HTTPException
 from typing import Optional, List
 from app.models.user_model import User
 from app.schemas.user_schema import UserCreate, UserUpdate, UserPatch
+from app.auth.security import get_password_hash
+
 
 
 ROLES_PERMITIDOS = {"admin", "support", "user"}
@@ -46,16 +48,27 @@ def obtener_usuario_por_email(db: Session, email: str) -> Optional[User]:
     """Busca un usuario por email."""
     return db.query(User).filter(User.email == email).first()
 
-
 def crear_usuario(db: Session, user: UserCreate) -> User:
     """Crea un nuevo usuario. Valida correo duplicado."""
-    if obtener_usuario_por_email(db, user.email):
-        raise HTTPException(status_code=400, detail="El correo ya se encuentra registrado")
 
-    nuevo_usuario = User(**user.model_dump())
+    if obtener_usuario_por_email(db, user.email):
+        raise HTTPException(
+            status_code=400,
+            detail="El correo ya se encuentra registrado"
+        )
+
+    nuevo_usuario = User(
+        name=user.name,
+        email=user.email,
+        hashed_password=get_password_hash(user.password),
+        role=user.role,
+        is_active=user.is_active
+    )
+
     db.add(nuevo_usuario)
     db.commit()
     db.refresh(nuevo_usuario)
+
     return nuevo_usuario
 
 

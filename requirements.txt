@@ -1,3 +1,11 @@
-fastapi>=0.110.0
-uvicorn>=0.28.0
-pydantic[email]>=2.6.0python -m uvicorn app.main:app --reload
+fastapi
+uvicorn
+sqlalchemy
+alembic
+pydantic[email]
+python-jose[cryptography]
+passlib[bcrypt]
+slowapi
+python-multipart
+email-validator
+python-dotenv

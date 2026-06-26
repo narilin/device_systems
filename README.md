@@ -157,3 +157,6 @@ Prueba 11: Validar que el dispositivo vuelva a estar disponible
 
 Prueba 12: Consultar historial de préstamos del dispositivo
 ![alt text](/imagenes/imagen13.png)
+
+
+## [Proyecto-Final-v2] GA1-220501096-01-AA1-EV11
